@@ -1,4 +1,4 @@
-<nav id="fix_bottom_menu" class="sora-fix-menu" role="navigation" aria-label="Bottom Navigation">
+<nav id="fix_bottom_menu" class="sora-fix-menu fixed-bottom-nav" role="navigation" aria-label="Bottom Navigation">
   <div class="sora-fix-menu__inner">
     <ul class="menu_list">
       <li class="menu-item menu-item--home">

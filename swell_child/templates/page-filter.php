@@ -343,6 +343,5 @@ function pf_render_results() {
 </div>
 <?php
   // 他の出力が終わったあと
-  include get_theme_file_path('parts/footer/fix_menu.php');
   get_footer();
 ?>

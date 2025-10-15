@@ -9,21 +9,20 @@
   --sora-bottom-nav-accent: var(--sora-accent, #2563eb);
 }
 
-body.has-bottom-nav {
-  padding-bottom: calc(var(--sora-bottom-nav-height, 64px) + env(safe-area-inset-bottom, 0px));
+body {
+  padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important;
 }
 
-.sora-fix-menu {
+:where(.fixed-bottom-nav, .sora-fix-menu) {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  top: auto;
   z-index: 2147483647;
   width: 100%;
   margin: 0;
   padding: 0;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
   box-sizing: border-box;
@@ -157,7 +156,7 @@ body.admin-bar .sora-fix-menu {
 
 @media (min-width: 1024px) {
   body.has-bottom-nav {
-    padding-bottom: 0;
+    padding-bottom: 0 !important;
   }
 
   .sora-fix-menu {

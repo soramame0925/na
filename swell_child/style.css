@@ -222,16 +222,17 @@ h1.sora-moved-title {
   position: fixed;
   inset: 0;
   pointer-events: none; /* child controls interaction */
-  z-index: 2147483646;  /* one below the bottom nav */
+  z-index: 2147483645;  /* safely below the bottom nav */
 }
 
 /* Left-side dark overlay (clickable) */
 .filter-overlay{
-  position: fixed;
+  position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
   width: calc(100vw - var(--drawer-w));
-  height: 100vh;
+  max-width: 100vw;
   background: rgba(0,0,0,.55);
   opacity: 0;
   pointer-events: none;
@@ -240,21 +241,26 @@ h1.sora-moved-title {
 
 /* Drawer on the right */
 .filter-drawer{
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
   width: var(--drawer-w);
   max-width: 100vw;
-  height: 100vh;
   background: #fff;
   box-shadow: -16px 0 32px rgba(0,0,0,.2);
   transform: translateX(100%);
   transition: transform .25s ease;
   pointer-events: auto;        /* can scroll/click inside */
-  overflow: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* When open (toggle this on <body> or .filter-layer root) */
+.filter-layer.is-open{
+  pointer-events: auto;
+}
+
 .filter-layer.is-open .filter-overlay{
   opacity: 1;
   pointer-events: auto;        /* overlay becomes clickable */
@@ -264,10 +270,11 @@ h1.sora-moved-title {
 }
 
 .filter-drawer {
-  width: clamp(260px, 46vw, 420px) !important;
-  max-width: 100% !important;
+  width: clamp(260px, 46vw, 420px);
+  max-width: 100vw;
 }
 
 .filter-overlay {
-  width: calc(100vw - clamp(260px, 46vw, 420px)) !important;
+  width: max(0px, calc(100vw - clamp(260px, 46vw, 420px)));
+  max-width: 100vw;
 }

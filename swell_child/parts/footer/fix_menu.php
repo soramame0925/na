@@ -1,27 +1,31 @@
-<?php
-// Guard against duplicate render in templates
-if (defined('SORA_FIX_MENU_RENDERED')) { return; }
-define('SORA_FIX_MENU_RENDERED', true);
-?>
-<nav id="fix_bottom_menu"
-     class="fixed-bottom-nav"
-     role="navigation"
-     aria-label="Bottom Navigation">
-  <ul class="fixed-bottom-nav__list" role="list">
-    <li class="fixed-bottom-nav__item">
-      <a class="fixed-bottom-nav__btn" href="/" aria-label="Home">🏠<span>ホーム</span></a>
-    </li>
-    <li class="fixed-bottom-nav__item">
-      <button type="button" class="fixed-bottom-nav__btn" data-onclick="toggleFilter" aria-label="Filter">🔎<span>フィルター</span></button>
-    </li>
-    <li class="fixed-bottom-nav__item">
-      <a class="fixed-bottom-nav__btn" href="/discover" aria-label="Shorts">▶️<span>ショート</span></a>
-    </li>
-    <li class="fixed-bottom-nav__item">
-      <a class="fixed-bottom-nav__btn" href="/search" aria-label="Search">🔍<span>検索</span></a>
-    </li>
-    <li class="fixed-bottom-nav__item">
-      <a class="fixed-bottom-nav__btn" href="/library" aria-label="Library">📚<span>ライブラリ</span></a>
-    </li>
-  </ul>
+<nav id="fix_bottom_menu" class="sora-fix-menu" role="navigation" aria-label="Bottom Navigation">
+  <div class="sora-fix-menu__inner">
+    <ul class="menu_list">
+      <li class="menu-item menu-item--home">
+        <a href="/" class="sora-fix-menu__btn" data-icon="🏠">
+          <span class="sora-fix-menu__label">ホーム</span>
+        </a>
+      </li>
+      <li class="menu-item menu-item--filter">
+        <button type="button" class="sora-fix-menu__btn" data-icon="🔍" data-onclick="toggleFilter">
+          <span class="sora-fix-menu__label">フィルター</span>
+        </button>
+      </li>
+      <li class="menu-item menu-item--shorts">
+        <a href="/discover" class="sora-fix-menu__btn" data-icon="🎬">
+          <span class="sora-fix-menu__label">ショート</span>
+        </a>
+      </li>
+      <li class="menu-item menu-item--library">
+        <a href="/library" class="sora-fix-menu__btn is-disabled" aria-disabled="true" tabindex="-1" data-icon="📚">
+          <span class="sora-fix-menu__label">ライブラリ</span>
+        </a>
+      </li>
+      <li class="menu-item menu-item--menu">
+        <a href="/menu" class="sora-fix-menu__btn" data-icon="☰">
+          <span class="sora-fix-menu__label">メニュー</span>
+        </a>
+      </li>
+    </ul>
+  </div>
 </nav>

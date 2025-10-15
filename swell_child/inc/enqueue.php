@@ -10,28 +10,13 @@ add_action('wp_enqueue_scripts', function () {
   $ver  = file_exists($dir . $path) ? filemtime($dir . $path) : null;
   wp_enqueue_style('swell-child-style', $uri . $path, [], $ver);
 
-  // Refresh bottom nav assets
-  wp_dequeue_style('old-fix-menu');
-  wp_dequeue_script('old-fix-menu');
-
   $path = '/assets/css/components/fix-menu.css';
   if (file_exists($dir . $path)) {
     wp_enqueue_style(
       'sora-fix-menu',
       $uri . $path,
-      [],
+      array(),
       filemtime($dir . $path)
-    );
-  }
-
-  $path = '/assets/js/common/fix-menu.js';
-  if (file_exists($dir . $path)) {
-    wp_enqueue_script(
-      'sora-fix-menu',
-      $uri . $path,
-      [],
-      filemtime($dir . $path),
-      true
     );
   }
 

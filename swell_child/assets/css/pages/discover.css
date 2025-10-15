@@ -1,0 +1,317 @@
+@charset "UTF-8";
+
+/* =============================
+ * Discoverページ全体の初期化
+ * 既存コードが利用するセレクタをそのまま維持
+ * ============================= */
+body.is-discover-page {
+  background: #000; /* Discoverページの背景を黒に */
+  color: #fff; /* テキストカラーを白に */
+  font-family: sans-serif; /* フォントをシンプルに */
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 横スクロールのみ防ぐ */
+}
+
+/* ===== 不要な要素を非表示（SWELL構造に限定）===== */
+body.is-discover-page .c-pageTitle,
+body.is-discover-page .p-breadcrumb,
+body.is-discover-page .sora-random-posts > h2,
+body.is-discover-page p:has(> .dashicons-headphones),
+body.is-discover-page .l-footer,
+body.is-discover-page .p-fixBtn,
+body.is-discover-page .p-shareBtn,
+body.is-discover-page .l-header,
+body.is-discover-page .wp-block-search,
+body.is-discover-page .l-main {
+  display: none !important; /* 表示を完全に無効化 */
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ===== 投稿一覧ラッパー（縦スクロール＋スナップ）===== */
+.sora-random-wrapper {
+  height: 100vh; /* 全画面表示 */
+  overflow-y: auto;
+  scroll-snap-type: y mandatory; /* スクロール位置固定 */
+  -webkit-overflow-scrolling: touch; /* モバイルでの滑らかスクロール */
+  overscroll-behavior-y: contain;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== 各投稿を1画面に収める ===== */
+.sora-post-page {
+  height: 100vh; /* 各投稿を画面全体に表示 */
+  scroll-snap-align: start; /* スクロール位置固定 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  /* Allow expand panels to extend outside */
+  overflow: visible !important;
+  position: relative;
+}
+
+/* ===== 投稿カードデザイン ===== */
+.sora-post-card {
+  background: #111;
+  border-radius: 20px; /* 丸みのあるデザイン */
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1); /* 軽い光沢の影 */
+  width: calc(100vw - 2rem); /* 画面幅に合わせる */
+  max-width: 420px; /* 最大幅制限 */
+  height: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: visible;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== メディア表示エリア ===== */
+.sora-card-media {
+  width: 100%;
+}
+
+.sora-card-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Enforce 16:9 aspect ratio for media without iframes */
+.sora-card-media:not(:has(iframe)) {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto 12px;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.sora-card-media:not(:has(iframe)) img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sora-chobit-wrapper {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.short-audio-player {
+  width: 100%;
+  position: relative;
+  height: 210px !important;
+}
+
+.short-audio-player iframe {
+  width: 100%;
+  height: 210px !important;
+  border: none;
+  display: block;
+}
+
+.sora-card-content {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.sora-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+}
+
+.sora-subinfo {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #ccc;
+}
+
+.sora-dl-link {
+  margin-top: auto;
+  display: block;
+  text-align: center;
+  background: #007bff;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* ===== アニメーション定義 ===== */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* ============================
+ * 展開UI（アイコン＋パネル）
+ * ============================ */
+.sora-expand-ui {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+  overflow: visible !important;
+}
+
+.sora-icon-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sora-icon-group.right {
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
+.sora-icon-group.right a.expand-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.expand-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================
+ * 展開パネル内の情報表示
+ * ============================ */
+.expand-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+/* ============================
+ * 背景ぼかしエフェクト（上部のみ）
+ * ============================ */
+body.expand-active::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 75vh;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9990;
+  pointer-events: none;
+}
+
+/* ============================
+ * 展開パネル本体（固定位置）
+ * ============================ */
+.sora-expand-panel {
+  display: none;
+  position: fixed;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9991;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 16px 20px;
+  font-size: 14px;
+  border-radius: 10px;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 90vw;
+  width: auto;
+  min-width: 260px;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.sora-expand-panel.active {
+  display: block;
+}
+
+/* ============================
+ * モバイル端末向け補正
+ * ============================ */
+@media screen and (max-width: 767px) {
+  .sora-expand-panel.active {
+    display: block !important;
+    position: fixed !important;
+    top: 10vh !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    z-index: 9991 !important;
+    max-width: 90vw !important;
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ============================
+ * 投稿カード内コンテンツ
+ * ============================ */
+.sora-post-card {
+  overflow: visible !important;
+}
+
+.sora-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sora-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  word-break: break-word;
+}
+
+.sora-review-link a {
+  color: #3fa8ff;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ============================
+ * Chobitプレイヤーの高さ調整
+ * ============================ */
+.sora-chobit-wrapper iframe {
+  height: 210px !important;
+  display: block;
+}

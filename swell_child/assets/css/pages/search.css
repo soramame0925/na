@@ -174,9 +174,15 @@ body.filter-active .filter-group {
   line-height: 1;
 }
 
-/* 🚫 Prevent body scrolling when the filter sidebar is open */
+/* 🚫 Prevent background scrolling when the filter sidebar is open */
 body.sidebar-open {
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+html.sidebar-open {
   overflow: hidden;
+  overscroll-behavior: contain;
 }
 
 .noUi-touch-area {

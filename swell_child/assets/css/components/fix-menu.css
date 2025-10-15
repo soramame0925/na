@@ -9,8 +9,12 @@
   --sora-bottom-nav-accent: var(--sora-accent, #2563eb);
 }
 
-body {
-  padding-bottom: calc(64px + env(safe-area-inset-bottom)) !important;
+body.has-bottom-nav {
+  padding-bottom: 0 !important;
+}
+
+body.has-bottom-nav > #all_wrapp {
+  padding-bottom: calc(var(--sora-bottom-nav-height) + env(safe-area-inset-bottom, 0px));
 }
 
 :where(.fixed-bottom-nav, .sora-fix-menu) {
@@ -152,10 +156,14 @@ body.admin-bar .sora-fix-menu {
   .sora-fix-menu {
     padding-bottom: max(env(safe-area-inset-bottom, 0px), 0px);
   }
+
+  body.has-bottom-nav > #all_wrapp {
+    padding-bottom: calc(var(--sora-bottom-nav-height) + max(env(safe-area-inset-bottom, 0px), 0px));
+  }
 }
 
 @media (min-width: 1024px) {
-  body.has-bottom-nav {
+  body.has-bottom-nav > #all_wrapp {
     padding-bottom: 0 !important;
   }
 

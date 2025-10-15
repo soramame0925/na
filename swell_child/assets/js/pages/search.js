@@ -324,7 +324,7 @@
       });
       dom.active.appendChild(frag);
       if (dom.resetBtn) dom.resetBtn.style.display = has ? '' : 'none';
-      requestAnimationFrame(adjustFilterSidebarLayout);
+      // requestAnimationFrame(adjustFilterSidebarLayout);
     },
     bind(){
       if (!dom.active) return;
@@ -351,101 +351,15 @@
   // ----- sidebar -----
   // サイドバーの高さや余白を動的計算
   function adjustFilterSidebarLayout(){
-    const sidebarEl = dom.sidebar || document.getElementById('filter-sidebar');
-    const sidebarInner = sidebarEl ? sidebarEl.querySelector('.filter-inner') : null;
-    const actions = sidebarEl ? sidebarEl.querySelector('.filter-actions') : null;
-    if(!sidebarInner) return;
-
-    requestAnimationFrame(() => {
-      const viewportHeight = getViewportHeight();
-      const headerHeight   = getHeaderHeight();
-      const bottomHeight   = getBottomNavHeight();
-      const actionsHeight  = actions ? actions.getBoundingClientRect().height : 0;
-
-      const hasChips = dom.active && dom.active.children.length > 0;
-      const topPadding = headerHeight + (hasChips ? HEADER_HEIGHT : 0);
-
-      sidebarInner.style.height = `${viewportHeight - actionsHeight}px`;
-      sidebarInner.style.maxHeight = `${viewportHeight - bottomHeight - actionsHeight}px`;
-      sidebarInner.style.paddingTop = `${topPadding}px`;
-      sidebarInner.style.paddingBottom = `${bottomHeight}px`;
-      if(actions) actions.style.bottom = `${bottomHeight}px`;
-      sidebarInner.style.boxSizing = 'border-box';
-      if(dom.closeBtn){
-        dom.closeBtn.style.top = `${headerHeight + CLOSE_BTN_OFFSET}px`;
-      }
-      syncOverlayWidth();
-    });
+    // Temporarily disabled while filter drawer remains inactive.
   }
 
   // ----- サイドバー制御 -----
   const Sidebar = {
-    open(){
-      const sidebar = dom.sidebar || document.getElementById('filter-sidebar');
-      if(!sidebar){
-        try{sessionStorage.setItem('openFilterOnLoad','1');}catch(e){}
-        window.location.href = '/filter/';
-        return;
-      }
-      dom.sidebar = sidebar;
-      if(!dom.layer) dom.layer = document.querySelector(SELECTORS.layer);
-      if(!dom.overlay) dom.overlay = document.querySelector(SELECTORS.overlay);
-      adjustFilterSidebarLayout();
-      observeDrawerResize();
-      if(scrollWatcher){
-        window.removeEventListener('scroll', scrollWatcher);
-      }
-      scrollWatcher = () => adjustFilterSidebarLayout();
-      window.addEventListener('scroll', scrollWatcher, { passive: true });
-      if(dom.layer) dom.layer.classList.add('is-open');
-      document.body.classList.add('sidebar-open');
-      document.documentElement.classList.add('sidebar-open');
-    },
-    close(){
-      if(dom.layer) dom.layer.classList.remove('is-open');
-      document.body.classList.remove('sidebar-open');
-      document.documentElement.classList.remove('sidebar-open');
-      if(scrollWatcher){
-        window.removeEventListener('scroll', scrollWatcher);
-        scrollWatcher = null;
-      }
-    },
-    toggle(){
-      const layerEl = dom.layer || document.querySelector(SELECTORS.layer);
-      dom.layer = layerEl;
-      if(layerEl && layerEl.classList.contains('is-open')){
-        Sidebar.close();
-      }else{
-        Sidebar.open();
-      }
-    },
-    bind(){
-      const overlayEl = dom.overlay || document.querySelector(SELECTORS.overlay);
-      const drawerEl  = dom.sidebar || document.querySelector(SELECTORS.sidebar);
-      if(overlayEl){
-        dom.overlay = overlayEl;
-        overlayEl.addEventListener('click',e=>{e.stopPropagation();Sidebar.close();});
-      }
-      if(drawerEl){
-        dom.sidebar = drawerEl;
-        drawerEl.addEventListener('click',e=>{e.stopPropagation();});
-      }
-      if(dom.closeBtn){
-        dom.closeBtn.addEventListener('click',e=>{e.preventDefault();Sidebar.close();});
-      }
-      document.querySelectorAll('.filter-toggle-btn,[data-onclick="toggleFilter"]').forEach(btn=>{
-        btn.addEventListener('click',e=>{e.preventDefault();Sidebar.toggle();});
-        btn.addEventListener('touchstart',e=>{e.preventDefault();Sidebar.toggle();});
-      });
-      document.addEventListener('keydown',e=>{
-        if(e.key==='Escape'){
-          const layerNode = dom.layer || document.querySelector(SELECTORS.layer);
-          if(layerNode && layerNode.classList.contains('is-open')){
-            Sidebar.close();
-          }
-        }
-      });
-    }
+    open(){},
+    close(){},
+    toggle(){},
+    bind(){}
   };
 
   function bindSliderToggle(){
@@ -483,7 +397,6 @@
     const reset=dom.resetBtn;
     if(reset) reset.addEventListener('click',()=>{window.location.href=window.location.href.split('?')[0];});
     Chips.bind();
-    Sidebar.bind();
   }
 
   // ----- init -----
@@ -507,15 +420,14 @@
         requestAnimationFrame(()=>Sidebar.open());
       }
     }catch(e){}
-    adjustFilterSidebarLayout();
-    const debouncedAdjust = debounce(adjustFilterSidebarLayout, ADJUST_WAIT);
-    window.addEventListener('resize', debouncedAdjust);
-    window.addEventListener('orientationchange', debouncedAdjust);
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', debouncedAdjust);
-    }
+    // adjustFilterSidebarLayout();
+    // const debouncedAdjust = debounce(adjustFilterSidebarLayout, ADJUST_WAIT);
+    // window.addEventListener('resize', debouncedAdjust);
+    // window.addEventListener('orientationchange', debouncedAdjust);
+    // if (window.visualViewport) {
+    //   window.visualViewport.addEventListener('resize', debouncedAdjust);
+    // }
     if(!dom.form||!dom.results){
-      Sidebar.bind();
       return;
     }
     cacheCheckboxes();

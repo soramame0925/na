@@ -1,0 +1,512 @@
+@charset "UTF-8";
+
+/* ===== グレーアウト用クラス ===== */
+label.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(100%);
+}
+
+label.disabled input {
+  cursor: not-allowed;
+}
+
+/* Each filter checkbox on its own line */
+.filter-group label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ===== 声のタイプの選択エリア（縦並び） ===== */
+.voice-pitch-filter .voice-type-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.voice-pitch-filter .filter-item {
+  display: block;
+}
+
+.term-count {
+  font-size: 0.85em;
+  color: #666;
+  margin-left: 4px;
+}
+
+/* === Chips UI === */
+/* ===== 選択中のフィルター表示 ===== */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+/* ===== フィルタークリアボタン（全消し） ===== */
+.reset-all-chips {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ===== 個別チップデザイン ===== */
+.filter-chip {
+  display: inline-block;
+  padding: 4px 8px;
+  background-color: #f1f1f1;
+  border-radius: 16px;
+  margin-right: 6px;
+  font-size: 0.9em;
+}
+
+.hidden-on-load {
+  display: none;
+}
+
+/* ===== 件数0のフィルターを隠す ===== */
+.filter-hidden {
+  display: none !important;
+}
+
+/* Default spacing between filter groups */
+.filter-group {
+  margin-bottom: 1.2rem;
+}
+
+.slider-toggle {
+  background: none;
+  border: none;
+  color: #0073aa;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Compact spacing when any filter is active */
+body.filter-active .filter-group {
+  margin-bottom: 0.6rem;
+}
+
+/* === Filter Sidebar Layout === */
+/* ============================
+ * 下部固定制御
+ * ============================ */
+@media (max-width: 767px) {
+  .filter-drawer {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+}
+
+/* filter-sidebarの中は横スクロールを完全に無効化 */
+.filter-drawer,
+.filter-inner {
+  overflow-x: hidden;
+}
+
+#filter-sidebar .filter-inner {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-top: 5rem; /* leave space for the close button */
+  margin: 0;
+  box-sizing: border-box;
+  max-height: none; /* JS will set height and max-height dynamically */
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: #fff;
+  box-shadow: none;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+  border-top: none;
+}
+
+.filter-actions button {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#filter-sidebar .close-button {
+  margin-bottom: 0;
+}
+
+/* position the sidebar close button in the top-right corner */
+#close-filter {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 20;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #333;
+  font-size: 2.5rem;
+  font-weight: bold;
+  line-height: 1;
+  box-shadow: none;
+  padding: 0;
+}
+
+#close-filter::before {
+  content: "\00d7"; /* × symbol */
+  line-height: 1;
+}
+
+/* 🚫 Prevent body scrolling when the filter sidebar is open */
+body.sidebar-open {
+  overflow: hidden;
+}
+
+.noUi-touch-area {
+  touch-action: none;
+}
+
+/* add horizontal spacing so sliders do not touch the sidebar edges */
+.filter-drawer [id$="-slider"] {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
+/* === Sort Select === */
+.sort-options {
+  text-align: right;
+  margin: 0 0 1rem;
+}
+.sort-options select {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.9rem;
+}
+
+/* === Feed card styles === */
+.feed-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+
+.feed-thumb img,
+.feed-thumb--placeholder {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.feed-thumb--placeholder {
+  background: #eee;
+  padding-top: 56%;
+}
+
+.feed-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0.5rem;
+}
+
+.feed-tags {
+  margin-bottom: 0.25rem;
+}
+
+.feed-tag {
+  display: inline-block;
+  background: #f1f1f1;
+  padding: 2px 4px;
+  font-size: 0.75rem;
+}
+
+
+.feed-meta {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.feed-price {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.feed-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.feed-actions .btn {
+  flex: 1;
+  text-align: center;
+}
+
+/* =========================
+ * DLsite-style Feed Layout
+ * ========================= */
+
+/* Card */
+.feed-card{
+  background:#fff;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  display:flex;
+  flex-direction:column;
+  border:1px solid rgba(0,0,0,.04);
+}
+.feed-card a{ text-decoration:none; }
+
+/* Thumbnail */
+.feed-thumb img,
+.feed-thumb--placeholder{
+  width:100%;
+  height:auto;
+  aspect-ratio: 4 / 3;       /* DLsite-like ratio */
+  object-fit:cover;
+  display:block;
+  background:#eee;
+}
+
+/* Body */
+.feed-body{
+  padding:10px 12px 12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* Tags */
+.feed-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.feed-tag{
+  font-size:11px; line-height:1;
+  padding:6px 8px; border-radius:10px;
+  background:#f2f3f5; color:#555;
+}
+
+/* Title */
+.feed-title{ font-size:12.5px; line-height:1.4; margin:0 0 0.4rem; }
+.feed-title a{ color:#111; }
+
+/* Meta line (circle / CV etc.) */
+.feed-meta{ display:flex; flex-wrap:wrap; gap:8px; color:#666; font-size:12px; }
+.meta-item::before{ content:"・"; margin:0 4px 0 0; color:#bbb; }
+.meta-item:first-child::before{ content:""; margin:0; }
+
+/* Bottom row */
+.feed-bottom{
+  margin-top:auto;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:8px;
+}
+
+/* Price / Rating */
+.feed-price{ display:flex; align-items:center; gap:6px; font-weight:700; }
+.price{ font-size:16px; }
+.price .yen{ font-size:11px; margin-left:2px; font-weight:600; color:#666; }
+.rating{ font-size:12px; color:#333; font-weight:600; }
+.rating-count{ font-size:11px; color:#777; }
+
+/* Actions (uses global .btn base) */
+.feed-actions{ display:flex; gap:8px; }
+.btn-outline{
+  border:1px solid #cfd3d8; color:#333; background:#fff;
+}
+.btn-primary{
+  background:#2b6aff; color:#fff;
+}
+
+/* Hover (PC only) */
+@media (hover:hover){
+  .feed-card{
+    transition:.18s ease;
+  }
+  .feed-card:hover{
+    box-shadow:0 6px 18px rgba(0,0,0,.10);
+    transform:translateY(-1px);
+  }
+}
+
+/* ===============================
+ * Feed card title: 2-line clamp (fixed)
+ * =============================== */
+.feed-title,
+.feed-title a {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;   /* show max 2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: calc(1.4em * 2);
+  white-space: normal !important;  /* override theme nowrap */
+  word-break: break-word;
+  min-width: 0;  /* prevent flexbox truncation */
+}
+
+/* ===== Force 2-line clamp on feed titles (high specificity) ===== */
+.feed-card .feed-title,
+.feed-card .feed-title a {
+  /* prevent flexbox from squeezing into a single line */
+  min-width: 0 !important;
+
+  /* multi-line ellipsis (WebKit) */
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+
+  /* overflow handling */
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+
+  /* kill theme utilities that force one-line text */
+  white-space: normal !important;
+
+  /* long words safety + consistent height */
+  word-break: break-word;
+  line-height: 1.4;
+  max-height: calc(1.4em * 2);
+}
+
+/* safety: no nowrap on any links inside feed cards */
+.feed-card a { white-space: normal !important; }
+
+/* === Canonical feed grid: 2 cols mobile, 3 cols desktop === */
+.feed-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 cols even on small screens */
+  margin: 12px 0 80px;
+}
+
+@media (min-width: 960px) {
+  .feed-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* --- Bigger card to host more info --- */
+.feed-card { min-height: 380px; }   /* Adjust 360–420px as needed */
+.feed-body { gap: 10px; }
+
+/* Title (smaller, 2-line clamp already applied) */
+.feed-title { font-size: 12.5px; line-height: 1.45; margin: 0; }
+.feed-title, .feed-title a {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  min-width: 0;
+}
+
+/* Meta (circle / CV) */
+.feed-meta { display: grid; gap: 2px; }
+.meta-line { font-size: 12px; color: #666; }
+.meta-line.circle { font-weight: 600; color:#444; }
+
+/* Price styling (DLsite-like emphasis) */
+.feed-price-row { display:flex; align-items:baseline; gap:6px; }
+.price-strong { font-size: 16px; font-weight: 800; color: #c00; }
+.price-strong .yen { font-size: 11px; color:#666; margin-left: 2px; }
+
+/* Actions */
+.feed-actions { display:flex; gap: 8px; margin-top: auto; }
+.feed-actions .btn { flex:1; text-align:center; }
+
+/* DLsite button */
+.btn-dlsite {
+  background: #ffd54d;  /* DLsite-style yellow */
+  color: #111;
+  border: 1px solid #e0b800;
+}
+
+/* Revert feed card height to default */
+.feed-card { min-height: 0; }  /* overrides previous 360–380px */
+
+/* === Stretched link: click anywhere on the card === */
+.feed-card { position: relative; }
+
+.card-stretched-link{
+  position: absolute;
+  inset: 0;                /* top/right/bottom/left: 0 */
+  z-index: 1;              /* sits under interactive elements */
+  background: transparent; /* invisible clickable layer */
+  text-decoration: none;
+}
+
+/* Keep action buttons, title link, and thumbnail link above the stretched link */
+.feed-actions,
+.feed-actions .btn,
+.feed-title a,
+.feed-thumb a{
+  position: relative;
+  z-index: 2;
+}
+
+/* Optional: reduce iOS tap highlight */
+.feed-card { -webkit-tap-highlight-color: transparent; }
+
+/* Meta links (circle / voice actors) */
+.feed-meta .meta-link {
+  color:#444;
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,0,0,.12);
+  padding-bottom:1px;
+}
+.feed-meta .meta-link:hover {
+  border-bottom-color: rgba(0,0,0,.4);
+}
+
+/* Ensure meta links are clickable above the stretched link */
+.feed-meta,
+.feed-meta .meta-link {
+  position: relative;
+  z-index: 2;   /* above .card-stretched-link (z-index:1) */
+}
+
+/* Safety: keep stretched link always in the background */
+.card-stretched-link {
+  z-index: 1;
+}
+
+/* Ensure galleries and inline images fill the content width */
+.entry-content .wp-block-gallery,
+.entry-content .wp-block-gallery .wp-block-image,
+.entry-content .blocks-gallery-grid,
+.entry-content .blocks-gallery-grid .blocks-gallery-item,
+.entry-content figure.wp-block-image {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.entry-content .wp-block-gallery img,
+.entry-content .blocks-gallery-grid img,
+.entry-content figure.wp-block-image img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+
+

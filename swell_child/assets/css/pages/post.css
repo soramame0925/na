@@ -1,0 +1,67 @@
+/* === 記事ページ用: Swiper ギャラリー === */
+body.single .sora-image-swiper {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+}
+
+body.single .sora-image-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+body.single .sora-image-swiper .swiper-pagination-bullet {
+  opacity: .6;
+}
+
+body.single .sora-image-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+/* 記事ページのデフォルトタイトル(H1)を非表示にして重複を防ぐ */
+body.single article.l-mainContent__inner > h1,
+body.single article.l-mainContent__inner > header h1 {
+  display: none;
+}
+
+
+/* === 投稿記事: Swiperを親flexの制約から解放して全幅に === */
+.post_content .wp-block-group.is-row.is-nowrap.is-layout-flex {
+  flex-wrap: wrap !important;   /* 子を折り返し許可 → Swiperを独立行に */
+  gap: 0 !important;            /* 不要ならギャップもゼロ */
+}
+
+.post_content .wp-block-group.is-row.is-nowrap.is-layout-flex > .sora-image-swiper {
+  flex: 1 1 100% !important;    /* Swiperを行幅いっぱいに広げる */
+  min-width: 100% !important;
+}
+
+
+
+
+/* === Single: Swiperギャラリーを4:3比率に固定（スマホのみ） === */
+@media (max-width: 767px){
+  .post_content .sora-image-swiper{
+    width: 100vw !important;               /* 画面端まで */
+    max-width: 100vw !important;
+    margin-left: 50% !important;
+    transform: translateX(-50%) !important;
+    aspect-ratio: 4 / 3;                   /* ★ ここで4:3固定 */
+    overflow: hidden;                      /* はみ出しカット */
+  }
+
+  .post_content .sora-image-swiper .swiper-wrapper,
+  .post_content .sora-image-swiper .swiper-slide{
+    height: 100% !important;               /* コンテナに合わせる */
+  }
+
+  .post_content .sora-image-swiper img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;          /* トリミングでフィット */
+    display: block;
+  }
+}

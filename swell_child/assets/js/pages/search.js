@@ -399,10 +399,12 @@
       window.addEventListener('scroll', scrollWatcher, { passive: true });
       if(dom.layer) dom.layer.classList.add('is-open');
       document.body.classList.add('sidebar-open');
+      document.documentElement.classList.add('sidebar-open');
     },
     close(){
       if(dom.layer) dom.layer.classList.remove('is-open');
       document.body.classList.remove('sidebar-open');
+      document.documentElement.classList.remove('sidebar-open');
       if(scrollWatcher){
         window.removeEventListener('scroll', scrollWatcher);
         scrollWatcher = null;
